@@ -24,11 +24,17 @@ repositories {
 }
 
 val querydslVersion = "7.3.0"
+val testcontainersVersion = "2.0.5"
+val restassuredVersion = "6.0.0"
 
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webmvc")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
     implementation("org.springframework.boot:spring-boot-starter-validation")
+
+    runtimeOnly("com.h2database:h2")
+    implementation("org.springframework.boot:spring-boot-h2console")
+    runtimeOnly("com.mysql:mysql-connector-j")
 
     implementation("io.github.openfeign.querydsl:querydsl-jpa:$querydslVersion")
     ksp("io.github.openfeign.querydsl:querydsl-ksp-codegen:$querydslVersion")
@@ -38,9 +44,10 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-flyway")
     implementation("org.flywaydb:flyway-mysql")
 
-    runtimeOnly("com.h2database:h2")
-    implementation("org.springframework.boot:spring-boot-h2console")
-    runtimeOnly("com.mysql:mysql-connector-j")
+    testImplementation("org.testcontainers:testcontainers-mysql:$testcontainersVersion")
+
+    testImplementation("io.rest-assured:rest-assured:$restassuredVersion")
+    testImplementation("io.rest-assured:kotlin-extensions:$restassuredVersion")
 
     implementation("org.jetbrains.kotlin:kotlin-reflect")
     implementation("tools.jackson.module:jackson-module-kotlin")
